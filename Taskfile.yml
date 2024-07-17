@@ -1,0 +1,11 @@
+version: '3'
+tasks:
+  init:
+    cmds:
+      - docker compose run web rails new --api . --database=postgresql
+  create:
+    cmds:
+      - docker compose run web rails db:create
+  migrate:
+    cmds:
+      - docker compose run web rake db:migrate
