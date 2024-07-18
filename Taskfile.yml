@@ -1,11 +1,37 @@
 version: '3'
+
 tasks:
   init:
+    desc: Initialize the project
     cmds:
-      - docker compose run web rails new --api . --database=postgresql
-  create:
+      - docker compose run --rm web rails new --api . --database=postgresql
+
+  db_create:
+    desc: Create the database
     cmds:
-      - docker compose run web rails db:create
-  migrate:
+      - docker compose run --rm web rails db:create
+
+  db_migrate:
+    desc: Run the database migrations
     cmds:
-      - docker compose run web rake db:migrate
+      - docker compose run --rm web rails db:migrate
+
+  db_drop:
+    desc: Drop the database
+    cmds:
+      - docker compose run --rm web rails db:drop
+
+  db_reset:
+    desc: Reset the database
+    cmds:
+      - docker compose run --rm web rails db:reset
+
+  db_rollback:
+    desc: Rollback the database
+    cmds:
+      - docker compose run --rm web rails db:rollback
+
+  remove:
+    desc: Remove the project
+    cmds:
+      - docker compose down --volumes
