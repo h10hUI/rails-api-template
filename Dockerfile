@@ -4,8 +4,8 @@ RUN apt-get update -qq && apt-get install -y postgresql-client
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
-RUN bundle install
 COPY . /myapp
+RUN bundle install
 
 EXPOSE 3000
 
