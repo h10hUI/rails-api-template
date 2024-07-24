@@ -6,6 +6,7 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 require 'database_cleaner/active_record'
+require 'factory_bot_rails'
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -24,6 +25,9 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  # FactoryBot config
+  config.include FactoryBot::Syntax::Methods
 
   # Type inferrence
   config.include RSpec::Rails::RequestExampleGroup, type: :request
