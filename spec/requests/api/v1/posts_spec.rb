@@ -36,4 +36,16 @@ RSpec.describe "PostAPI", type: :request do
     # リクエストが成功することを確認
     expect(response).to have_http_status(:success)
   end
+
+  it "ポストを更新する" do
+    post = create(:post, title: "old-title")
+    put "/api/v1/posts/#{post.id}", params: { post: { title: "new-title" } }
+    json = JSON.parse(response.body)
+
+    # リクエストが成功することを確認
+    expect(response).to have_http_status(:success)
+
+    # ポストが更新されることを確認
+    expect(json["data"]["title"]).to eq("new-title")
+  end
 end
