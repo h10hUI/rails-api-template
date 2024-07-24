@@ -48,4 +48,17 @@ RSpec.describe "PostAPI", type: :request do
     # ポストが更新されることを確認
     expect(json["data"]["title"]).to eq("new-title")
   end
+
+  it "ポストを削除する" do
+    post = create(:post)
+
+    # データが削除されることを確認
+    expect { delete "/api/v1/posts/#{post.id}" }.to change(Post, :count).by(-1)
+
+    # リクエストが成功することを確認
+    expect(response).to have_http_status(:success)
+
+    # レスポンスが空であることを確認
+    expect(Post.count).to eq(0)
+  end
 end
