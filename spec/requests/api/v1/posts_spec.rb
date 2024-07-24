@@ -26,4 +26,14 @@ RSpec.describe "PostAPI", type: :request do
     # 要求した特定ポストが返されることを確認
     expect(json["data"]["title"]).to eq("test-title")
   end
+
+  it "新しいポストを作成する" do
+    valid_params = { title: "title" }
+
+    # データが作成されることを確認
+    expect { post "/api/v1/posts", params: { post: valid_params } }.to change(Post, :count).by(+1)
+
+    # リクエストが成功することを確認
+    expect(response).to have_http_status(:success)
+  end
 end
