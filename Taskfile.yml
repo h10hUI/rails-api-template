@@ -29,6 +29,7 @@ tasks:
   db_reset:
     desc: Reset the database
     cmds:
+      - docker compose ren --rm web rails db:environment:set RAILS_ENV=development
       - docker compose run --rm web rails db:reset
 
   db_rollback:
@@ -47,8 +48,32 @@ tasks:
       - docker compose run --rm web rails db:create RAILS_ENV=test
       - docker compose run --rm web rails db:migrate RAILS_ENV=test
 
+  test_all:
+    desc: Run all tests
+    cmds:
+      - docker compose run --rm web rspec
+
   test_posts_spec:
     desc: Run the posts spec
     cmds:
       - docker compose run --rm web rspec spec/requests/api/v1/posts_spec.rb
 
+  routes:
+    desc: List all defined routes
+    cmds:
+      - docker compose run --rm web rails routes
+
+  console:
+    desc: Start a Rails console
+    cmds:
+      - docker compose run --rm web rails console
+
+  lint:
+    desc: Run RuboCop for code linting
+    cmds:
+      - docker compose run --rm web rubocop
+
+  generate_schema:
+    desc: Generate database schema
+    cmds:
+      - docker compose run --rm web rails db:schema:dump
